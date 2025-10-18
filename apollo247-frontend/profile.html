@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Apollo Hospitals</title>
+  <style>
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Header - Compact but Professional */
+.header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 0.9rem 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.logo::before {
+    content: "🏥";
+    font-size: 1.5rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.profile-pic {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.profile-pic:hover {
+    transform: scale(1.08);
+}
+
+.profile-pic img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+/* Main Layout - Reduced Screen Margins */
+.main-container {
+    display: flex;
+    min-height: calc(100vh - 68px);
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.8rem 1.5rem;
+    gap: 2rem;
+}
+
+/* Sidebar - Compact but Spaced */
+.sidebar {
+    background: white;
+    border-radius: 10px;
+    padding: 1.8rem 1.2rem;
+    width: 250px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    height: fit-content;
+    position: sticky;
+    top: 88px;
+    flex-shrink: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 1rem 1.2rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem;
+    border-left: 3px solid transparent;
+    background: #fafbfc;
+}
+
+.sidebar li:hover {
+    background: linear-gradient(135deg, #f0f4ff, #e8f2ff);
+    color: #1e3c72;
+    border-left-color: #1e3c72;
+    transform: translateX(5px);
+}
+
+/* Main Content - Optimized Spacing */
+.content {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    min-height: 500px;
+}
+
+.content h2 {
+    color: #1e3c72;
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.content > p {
+    color: #666;
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+}
+
+/* Doctor Cards - Balanced Spacing */
+.doctor-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    position: relative;
+}
+
+.doctor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.doctor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    border-color: #1e3c72;
+}
+
+.doctor-image {
+    flex-shrink: 0;
+}
+
+.doctor-image img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8f4fd;
+    transition: all 0.3s ease;
+}
+
+.doctor-card:hover .doctor-image img {
+    border-color: #1e3c72;
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-info h3 {
+    color: #1e3c72;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.doctor-info p {
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.doctor-info strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.doctor-right {
+    text-align: right;
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.doctor-right p {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.doctor-right p:first-child {
+    color: #f39c12;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Appointment Cards */
+.appointment-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    border-left: 4px solid #27ae60;
+    transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+}
+
+.appointment-card h4 {
+    color: #1e3c72;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.appointment-card p {
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.appointment-card strong {
+    color: #333;
+}
+
+/* Pharmacy Section */
+.medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.8rem;
+}
+
+.medicine-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.8rem;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    position: relative;
+}
+
+.medicine-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.medicine-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.medicine-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 0.6rem;
+}
+
+.medicine-specialty {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.medicine-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #27ae60;
+    margin-bottom: 1.2rem;
+}
+
+.buy-btn {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    border: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.buy-btn:hover {
+    background: linear-gradient(135deg, #229954, #27ae60);
+    transform: translateY(-2px);
+}
+
+/* Section Headers */
+section h3 {
+    color: #1e3c72;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #e8f4fd;
+}
+
+/* Web-only responsive (no mobile) */
+@media (max-width: 1200px) {
+    .main-container {
+        max-width: 1100px;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-container {
+        max-width: 1000px;
+        padding: 1.5rem 1.2rem;
+        gap: 1.8rem;
+    }
+    
+    .sidebar {
+        width: 230px;
+        padding: 1.5rem 1rem;
+    }
+    
+    .content {
+        padding: 1.8rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.doctor-card,
+.appointment-card,
+.medicine-card {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e3c72;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2a5298;
+}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">Apollo Hospitals</h1>
+    <div class="header-right">
+      <div class="profile-pic">
+        <img id="userImage" src="https://via.placeholder.com/40" alt="Profile" />
+        <input type="file" id="uploadImage" accept="image/*" hidden>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li>Doctors</li>
+        <li>Doctor Appointments</li>
+        <li>Pharmacy</li>
+        <li>Test Reports</li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <h2>Welcome, <span id="userName">User</span>!</h2>
+      <p>Select a section from the left menu to view details.</p>
+
+      <!-- All Doctors Section -->
+      <section id="doctorListSection">
+        <div id="doctorList"></div>
+      </section>
+
+      <!-- Doctor Appointments Section -->
+      <section id="doctorAppointmentsSection" style="display:none">
+        <h3>My Appointments</h3>
+        <div id="doctorAppointments"></div>
+      </section>
+
+      <!-- Pharmacy Section -->
+      <section id="pharmacySection" style="display:none;">
+        <h3>Pharmacy Store</h3>
+        <div id="medicinesContainer" class="medicine-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Handle showing username
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("username") || localStorage.getItem("loggedInUser") || "User";
+    document.getElementById("userName").textContent = username;
+    localStorage.setItem("username", username);
+
+    // Profile image upload
+    const uploadBtn = document.getElementById("uploadImage");
+    const profilePic = document.getElementById("userImage");
+
+    // Load saved profile image if exists
+    const savedImage = localStorage.getItem("profilePic");
+    if (savedImage) {
+      profilePic.src = savedImage;
+    }
+
+    profilePic.addEventListener("click", () => uploadBtn.click());
+    uploadBtn.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          profilePic.src = reader.result;
+          localStorage.setItem("profilePic", reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // ===== Doctor Data (same as doctors page) =====
+    const allDoctors = [];
+    const specialties = ["Cardiologist","Dermatologist","Gynecologist","Neurologist","Pulmonologist"];
+    const locations = ["New Delhi","Mumbai","Bengaluru","Hyderabad","Chennai"];
+    const doctorImages = {
+      Male: ["male1.jpg","male2.jpg","male3.jpg","male4.jpg","male5.jpg"],
+      Female: ["lady1.jpg","lady2.jpg","lady3.jpg","lady4.jpg","lady5.jpg"]
+    };
+    function getDoctorImage(gender, index) {
+      const imgs = doctorImages[gender] || [];
+      return imgs.length > 0 ? imgs[index % imgs.length] : "default.jpg";
+    }
+    const maleNames = ["Amit","Rahul","Siddharth","Vikram","Rohan","Arjun","Karan","Ankit","Ravi","Saurabh"];
+    const femaleNames = ["Neha","Priya","Ananya","Kavya","Sana","Ritu","Aisha","Simran","Pooja","Meera"];
+    specialties.forEach(specialty => {
+      for (let i = 0; i < 10; i++) {
+        const isMale = i % 2 === 0;
+        const name = isMale ? maleNames[i] : femaleNames[i];
+        const gender = isMale ? "Male" : "Female";
+        allDoctors.push({
+          name: `Dr. ${name} ${specialty}`,
+          gender: gender,
+          specialty: specialty,
+          fees: 400 + (i + 1) * 50,
+          services: ["Video Consult", "Clinic Visit"],
+          rating: parseFloat((4 + Math.random()).toFixed(1)),
+          reviews: Math.floor(Math.random() * 50) + 1,
+          experience: 5 + i,
+          availability: i % 2 === 0 ? "Yes" : "No",
+          photo: getDoctorImage(gender, i),
+          location: locations[i % locations.length]
+        });
+      }
+    });
+
+    // ===== Render Doctors in Profile Page =====
+    const doctorList = document.getElementById("doctorList");
+
+    function renderDoctorsList(doctors) {
+      doctorList.innerHTML = "";
+      doctors.forEach(doc => {
+        const card = document.createElement("div");
+        card.className = "doctor-card";
+        card.innerHTML = `
+          <div class="doctor-image"><img src="${doc.photo}" alt="${doc.name}"></div>
+          <div class="doctor-info">
+            <h3 class="doctor-name">${doc.name}</h3>
+            <p><strong>Specialty:</strong> ${doc.specialty}</p>
+            <p><strong>Fees:</strong> ₹${doc.fees}</p>
+            <p><strong>Location:</strong> ${doc.location}</p>
+            <p><strong>Experience:</strong> ${doc.experience}+ years</p>
+          </div>
+          <div class="doctor-right">
+            <p>⭐ ${doc.rating}</p>
+            <p>Available: ${doc.availability}</p>
+          </div>
+        `;
+        doctorList.appendChild(card);
+      });
+    }
+
+    renderDoctorsList(allDoctors);
+
+    // ===== Sidebar Toggle =====
+    const sidebarItems = document.querySelectorAll(".sidebar ul li");
+    const doctorSection = document.getElementById("doctorListSection");
+    const appointmentSection = document.getElementById("doctorAppointmentsSection");
+    const pharmacySection = document.getElementById("pharmacySection");
+
+    sidebarItems.forEach(item => {
+      item.addEventListener("click", () => {
+        const text = item.textContent.trim();
+        if (text === "Doctors") {
+          doctorSection.style.display = "block";
+          appointmentSection.style.display = "none";
+          pharmacySection.style.display = "none";
+        } else if (text === "Doctor Appointments") {
+          doctorSection.style.display = "none";
+          appointmentSection.style.display = "block";
+          pharmacySection.style.display = "none";
+          loadAppointments();
+        } else if (text === "Pharmacy") {
+          doctorSection.style.display = "none";
+          appointmentSection.style.display = "none";
+          pharmacySection.style.display = "block";
+          renderMedicines();
+        } else {
+          doctorSection.style.display = "none";
+          appointmentSection.style.display = "none";
+          pharmacySection.style.display = "none";
+        }
+      });
+    });
+
+    // Load appointments from backend
+    async function loadAppointments() {
+      if (!username) return;
+      try {
+        const res = await fetch(`http://localhost:5000/api/appointments/${username}`);
+        const result = await res.json();
+
+        if (!result.success) {
+          console.error("Error:", result.error);
+          return;
+        }
+
+        const appointments = result.data;
+        const container = document.getElementById("doctorAppointments");
+        container.innerHTML = "";
+
+        if (appointments.length === 0) {
+          container.innerHTML = "<p>No appointments booked yet.</p>";
+        } else {
+          appointments.forEach(app => {
+            const card = document.createElement("div");
+            card.classList.add("appointment-card");
+            card.innerHTML = `
+              <h4>${app.doctorName}</h4>
+              <p><strong>Specialization:</strong> ${app.doctorSpecialty}</p>
+              <p><strong>Date:</strong> ${app.date}</p>
+              <p><strong>Time:</strong> ${app.time}</p>
+              <p><strong>Region:</strong> ${app.region}</p>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching appointments:", err);
+      }
+    }
+
+    // Pharmacy medicines data
+    const medicines = [
+      {name: "Femivita Tablets", specialty: "Gynaecologist", price: 450},
+      {name: "Pregnacare Plus", specialty: "Gynaecologist", price: 600},
+      {name: "Neurobion Forte", specialty: "Neurologist", price: 250},
+      {name: "Piracetam 800mg", specialty: "Neurologist", price: 300},
+      {name: "Atorvastatin 20mg", specialty: "Cardiologist", price: 400},
+      {name: "Aspirin 75mg", specialty: "Cardiologist", price: 150},
+      {name: "Calcium + Vitamin D3", specialty: "Orthopedic", price: 350},
+      {name: "Glucosamine 500mg", specialty: "Orthopedic", price: 500},
+      {name: "Hydrocortisone Cream", specialty: "Dermatologist", price: 200},
+      {name: "Cetrizine 10mg", specialty: "Pediatrician", price: 120},
+    ];
+
+    const medicinesContainer = document.getElementById("medicinesContainer");
+
+    function renderMedicines() {
+      medicinesContainer.innerHTML = "";
+      medicines.forEach(med => {
+        const card = document.createElement("div");
+        card.className = "medicine-card";
+        card.innerHTML = `
+          <div class="medicine-name">${med.name}</div>
+          <div class="medicine-specialty">${med.specialty}</div>
+          <div class="medicine-price">₹${med.price}</div>
+          <button class="buy-btn">Buy Now</button>
+        `;
+        medicinesContainer.appendChild(card);
+      });
+    }
+
+    loadAppointments();
+  </script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apollo Doctors - Find the Best Specialists</title>
+  <style>
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url("https://whctllc.com/wp-content/uploads/2019/06/medical-devices_wide-83ffd4a62d42a43586951e216009759357b7eb75.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    line-height: 1.6;
+    color: #333;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: -1;
+}
+
+/* New Professional Header */
+.header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo::before {
+    content: "🏥";
+    font-size: 1.5rem;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+
+/* Main Container - Full Width */
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+}
+
+/* Page Header */
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+}
+
+.page-header h1 {
+    color: #1e3c72;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Doctors List - Full Screen Width */
+#doctorList {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Doctor Card - FULL SCREEN WIDTH */
+.doctor-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid #f1f3f4;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.doctor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.doctor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.doctor-image {
+    flex-shrink: 0;
+    position: relative;
+}
+
+.doctor-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1e3c72;
+    background: #f8f9fa;
+}
+
+.doctor-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.doctor-info h3 {
+    color: #1e3c72;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.doctor-info p {
+    margin-bottom: 0.6rem;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.doctor-info strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.doctor-right {
+    text-align: right;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    min-width: 150px;
+}
+
+.doctor-right p {
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.doctor-right p:first-child {
+    color: #f39c12;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.book-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+}
+
+.book-btn:hover {
+    background: linear-gradient(135deg, #229954, #27ae60);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+}
+
+/* Section Titles */
+h2.section-title {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #1e3c72;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1e3c72;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.modal-content label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.modal-content input, .modal-content button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.modal-content button:hover {
+    background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-menu a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .doctor-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .doctor-right {
+        text-align: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .page-header p {
+        font-size: 1.1rem;
+    }
+    
+    .book-btn {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .nav-menu {
+        gap: 0.5rem;
+    }
+    
+    .nav-menu a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .doctor-card {
+        padding: 1.2rem;
+    }
+    
+    .doctor-image img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .doctor-info h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Animation for smooth loading */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.doctor-card {
+    animation: fadeIn 0.5s ease-out;
+}
+  </style>
+</head>
+<body>
+  <!-- New Professional Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="#" class="logo">Apollo Hospitals</a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="appointments.html">Appointments</a></li>
+          <li><a href="medical-records.html">Medical Records</a></li>
+          <li><a href="#" id="loginNav">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="page-header">
+      <h1>Find the Right Doctor for You</h1>
+      <p>Book appointments with our expert medical professionals</p>
+    </div>
+
+    <div id="doctorList"></div>
+  </div>
+
+  <!-- Appointment Modal -->
+  <div id="appointmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Book Appointment</h2>
+      <form id="appointmentForm">
+        <label>Doctor:</label>
+        <input type="text" id="doctorName" readonly>
+
+        <label>Specialty:</label>
+        <input type="text" id="doctorSpecialty" readonly>
+
+        <label>Region:</label>
+        <input type="text" id="region" required>
+
+        <label>Date:</label>
+        <input type="date" id="date" required>
+
+        <label>Time:</label>
+        <input type="time" id="time" required>
+
+        <button type="submit">Confirm Appointment</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ===== Doctor Data =====
+    const allDoctors = [];
+    const specialties = ["Cardiologist","Dermatologist","Gynecologist","Neurologist","Pulmonologist"];
+    const locations = ["New Delhi","Mumbai","Bengaluru","Hyderabad","Chennai"];
+    const doctorImages = {
+      Male: ["male1.jpg","male2.jpg","male3.jpg","male4.jpg","male5.jpg"],
+      Female: ["lady1.jpg","lady2.jpg","lady3.jpg","lady4.jpg","lady5.jpg"]
+    };
+    function getDoctorImage(gender, index) {
+      const imgs = doctorImages[gender] || [];
+      return imgs.length > 0 ? imgs[index % imgs.length] : "default.jpg";
+    }
+    const maleNames = ["Amit","Rahul","Siddharth","Vikram","Rohan","Arjun","Karan","Ankit","Ravi","Saurabh"];
+    const femaleNames = ["Neha","Priya","Ananya","Kavya","Sana","Ritu","Aisha","Simran","Pooja","Meera"];
+    specialties.forEach(specialty => {
+      for (let i = 0; i < 10; i++) {
+        const isMale = i % 2 === 0;
+        const name = isMale ? maleNames[i] : femaleNames[i];
+        const gender = isMale ? "Male" : "Female";
+        allDoctors.push({
+          name: `Dr. ${name} ${specialty}`,
+          gender: gender,
+          specialty: specialty,
+          fees: 400 + (i + 1) * 50,
+          services: ["Video Consult", "Clinic Visit"],
+          rating: parseFloat((4 + Math.random()).toFixed(1)),
+          reviews: Math.floor(Math.random() * 50) + 1,
+          experience: 5 + i,
+          availability: i % 2 === 0 ? "Yes" : "No",
+          photo: getDoctorImage(gender, i),
+          location: locations[i % locations.length]
+        });
+      }
+    });
+
+    const doctorList = document.getElementById("doctorList");
+
+    // ===== Render Doctors =====
+    function renderDoctors(doctors, title=null) {
+      if (title) {
+        const heading = document.createElement("h2");
+        heading.className = "section-title";
+        heading.textContent = title;
+        doctorList.appendChild(heading);
+      }
+      doctors.forEach(doc => {
+        const card = document.createElement("div");
+        card.className = "doctor-card";
+        card.innerHTML = `
+          <div class="doctor-image"><img src="${doc.photo}" alt="${doc.name}"></div>
+          <div class="doctor-info">
+            <h3 class="doctor-name">${doc.name}</h3>
+            <p><strong>Specialty:</strong> <span class="doctor-specialty">${doc.specialty}</span></p>
+            <p><strong>Fees:</strong> ₹${doc.fees}</p>
+            <p><strong>Location:</strong> ${doc.location}</p>
+            <p><strong>Experience:</strong> ${doc.experience}+ years</p>
+            <button class="book-btn">Book Appointment</button>
+          </div>
+          <div class="doctor-right">
+            <p>⭐ ${doc.rating}</p>
+            <p>Available: ${doc.availability}</p>
+          </div>
+        `;
+        doctorList.appendChild(card);
+      });
+    }
+
+    // ===== Filtering Logic =====
+    const params = new URLSearchParams(window.location.search);
+    const specialtyFilter = params.get("specialty") || "";
+    const genderFilter = params.get("gender") || "";
+    const experienceFilter = parseInt(params.get("experience")) || 0;
+
+    let filtered = allDoctors.filter(doc => {
+      let matches = true;
+      if (specialtyFilter && doc.specialty.toLowerCase() !== specialtyFilter.toLowerCase()) matches = false;
+      if (genderFilter && doc.gender.toLowerCase() !== genderFilter.toLowerCase()) matches = false;
+      if (experienceFilter && doc.experience < experienceFilter) matches = false;
+      return matches;
+    });
+
+    let moreOptions = [];
+    if (specialtyFilter) {
+      moreOptions = allDoctors.filter(doc =>
+        doc.specialty.toLowerCase() === specialtyFilter.toLowerCase() && !filtered.includes(doc)
+      );
+    }
+
+    // ===== Render Results =====
+    if (filtered.length > 0) renderDoctors(filtered, "Filtered Doctors");
+    if (moreOptions.length > 0) renderDoctors(moreOptions, "More Options");
+    if (filtered.length === 0 && moreOptions.length === 0) {
+      doctorList.innerHTML = "<h2>No doctors found with given filters.</h2>";
+    }
+
+    // ===== Appointment Modal Logic =====
+    const modal = document.getElementById("appointmentModal");
+    const closeBtn = document.querySelector(".close-btn");
+    const appointmentForm = document.getElementById("appointmentForm");
+
+    let selectedDoctor = {};
+
+    // Open modal
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("book-btn")) {
+        const card = e.target.closest(".doctor-card");
+        selectedDoctor = {
+          name: card.querySelector(".doctor-name").textContent,
+          specialty: card.querySelector(".doctor-specialty").textContent
+        };
+
+        document.getElementById("doctorName").value = selectedDoctor.name;
+        document.getElementById("doctorSpecialty").value = selectedDoctor.specialty;
+
+        modal.style.display = "block";
+      }
+    });
+
+    // Close modal
+    closeBtn.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+
+    // Handle form submit
+    appointmentForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // 🔴 Hardcode for now (replace later with actual logged in user)
+      const username = localStorage.getItem("loggedInUser") || "sirisha";
+
+      const appointmentData = {
+        username,
+        doctorName: selectedDoctor.name,
+        doctorSpecialty: selectedDoctor.specialty,
+        region: document.getElementById("region").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/api/appointments/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(appointmentData)
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          alert("Appointment booked successfully!");
+          modal.style.display = "none";
+          appointmentForm.reset();
+        } else {
+          alert("Error booking appointment: " + result.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error.");
+      }
+    });
+  </script>
+</body>
+</html>
